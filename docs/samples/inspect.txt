@@ -1,0 +1,42 @@
+demo-tools 1.0.0   protocol 2025-06-18
+3 tools   1 resources   0 templates   0 prompts
+capabilities: resources, tools
+instructions: Small demo server for mcp-doctor. Try the add tool.
+
+TOOLS
+NAME        DESCRIPTION                                     ARGS  REQUIRED  OUTPUT
+----------  ----------------------------------------------  ----  --------  ------
+add         Add two integers and return the sum.            2     a,b       yes   
+echo        Return the given text unchanged. Useful for...  2     text      no    
+word_count  Count words and lines in a block of text.       1     text      no    
+
+RESOURCES
+URI              NAME           MIME         
+---------------  -------------  -------------
+memo://handbook  Team handbook  text/markdown
+
+demo-tools 1.0.0  |  protocol 2025-06-18
+conformance    ############################ 100/100   grade A
+23 pass  0 warn  0 fail  2 skip
+
+AREA    RESULT   
+------  ---------
+INIT    4 pass   
+PROTO   8 pass   
+TOOLS   5 pass   
+RES     1 pass   
+PROMPT  -  1 skip
+CAP     2 pass   
+META    2 pass   
+CALL    -  1 skip
+PERF    1 pass   
+
+not passing
+  SKIP  PROMPT-01 prompts/list result shape  (not advertised)
+  SKIP  CALL-01   safe tool call round-trip  (no read-only tool with zero required arguments to probe with)
+
+security audit
+security       ############################ 100/100   grade A
+0 critical  0 high  0 medium  0 low  0 info   (13 static rules evaluated)
+
+  no findings: nothing in the advertised surface matches a rule

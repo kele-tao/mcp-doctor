@@ -1,0 +1,18 @@
+test-tool add {"a": 19, "b": 23}
+  ok    arguments    arguments satisfy inputSchema
+  ok    call         server accepted the request
+  ok    result       1 content item(s), all well formed
+  ok    outputSchema structuredContent matches outputSchema
+    {
+      "content": [
+        {
+          "text": "42",
+          "type": "text"
+        }
+      ],
+      "structuredContent": {
+        "sum": 42
+      }
+    }
+
+PASS  test-tool add

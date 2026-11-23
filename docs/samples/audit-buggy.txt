@@ -1,0 +1,67 @@
+security audit
+security       ............................   0/100   grade F
+2 critical  9 high  4 medium  1 low  0 info   (13 static rules evaluated)
+
+RULE    SEVERITY  FINDING                                                       WHERE                       
+------  --------  ------------------------------------------------------------  ----------------------------
+MCP201  CRITICAL  tool 'run_shell_command' mentions shell execution and tak...  tool:run_shell_command      
+MCP202  CRITICAL  tool 'fetch_url' leaks a credential-shaped string             tool:fetch_url              
+MCP203  HIGH      resource 'Any file by path' exposes a file/system URI tem...  resource:Any file by path   
+MCP203  HIGH      resource 'Entire filesystem' exposes a file/system URI te...  resource:Entire filesystem  
+MCP203  HIGH      resource 'Home directories' exposes a file/system URI tem...  resource:Home directories   
+MCP204  HIGH      resource 'Any file by path' advertises a filesystem root      resource:Any file by path   
+MCP204  HIGH      resource 'Entire filesystem' advertises a filesystem root     resource:Entire filesystem  
+MCP204  HIGH      resource 'Home directories' advertises a filesystem root      resource:Home directories   
+MCP205  HIGH      tool 'run_shell_command' accepts unbounded strings for ex...  tool:run_shell_command      
+MCP207  HIGH      server lists tools without advertising the tools capabili...  capabilities                
+MCP207  HIGH      server lists resources without advertising the resources ...  capabilities                
+MCP206  MEDIUM    tool 'read_delete_update_create_file' description carries...  tool:read_delete_update_c...
+MCP208  MEDIUM    tool 'read_delete_update_create_file' bundles many destru...  tool:read_delete_update_c...
+MCP208  MEDIUM    tool 'read_delete_update_create_file' takes 21 arguments      tool:read_delete_update_c...
+MCP209  MEDIUM    tool 'read_delete_update_create_file' is destructive but ...  tool:read_delete_update_c...
+MCP210  LOW       no tool declares an outputSchema                              tools                       
+
+  MCP201 tool 'run_shell_command' mentions shell execution and takes free-form string input
+    evidence: description/name matches shell command; string arguments: command, cwd
+    fix:      pass argv arrays to subprocess without shell=True, validate the argument against an allowlist, and reject shell metacharacters
+  MCP202 tool 'fetch_url' leaks a credential-shaped string
+    evidence: matched 'sk-[A-Za-z0-9_-]{16,}' near 'sk-live-4f9a'...
+    fix:      remove the literal from the descriptor; read the credential from the environment at call time
+  MCP203 resource 'Any file by path' exposes a file/system URI template
+    evidence: uri='file:///{path}'
+    fix:      serve resources from a fixed allowlisted root, resolve and verify the real path stays inside it, and reject .. segments before reading
+  MCP203 resource 'Entire filesystem' exposes a file/system URI template
+    evidence: uri='file:///'
+    fix:      serve resources from a fixed allowlisted root, resolve and verify the real path stays inside it, and reject .. segments before reading
+  MCP203 resource 'Home directories' exposes a file/system URI template
+    evidence: uri='file:///home'
+    fix:      serve resources from a fixed allowlisted root, resolve and verify the real path stays inside it, and reject .. segments before reading
+  MCP204 resource 'Any file by path' advertises a filesystem root
+    evidence: uri='file:///{path}' covers an entire tree, not a document
+    fix:      scope the resource to explicit files under a project directory
+  MCP204 resource 'Entire filesystem' advertises a filesystem root
+    evidence: uri='file:///' covers an entire tree, not a document
+    fix:      scope the resource to explicit files under a project directory
+  MCP204 resource 'Home directories' advertises a filesystem root
+    evidence: uri='file:///home' covers an entire tree, not a document
+    fix:      scope the resource to explicit files under a project directory
+  MCP205 tool 'run_shell_command' accepts unbounded strings for execution
+    evidence: no enum/pattern/maxLength on: command, cwd
+    fix:      add an enum of allowed values or a strict pattern plus maxLength
+  MCP207 server lists tools without advertising the tools capability
+    evidence: capabilities=none, tools=3
+    fix:      declare "tools": {} in the initialize result
+  MCP207 server lists resources without advertising the resources capability
+    evidence: capabilities=none
+    fix:      declare "resources": {} in the initialize result
+  MCP206 tool 'read_delete_update_create_file' description carries instruction-override phrasing
+    evidence: description contains 'ignore previous', which an agent may treat as a directive
+  MCP208 tool 'read_delete_update_create_file' bundles many destructive verbs
+    evidence: name matches create, delete, update
+  MCP208 tool 'read_delete_update_create_file' takes 21 arguments
+    evidence: large flat argument surface is hard for a model to fill correctly
+  MCP209 tool 'read_delete_update_create_file' is destructive but declares no annotations
+    evidence: annotations=[]
+  MCP210 no tool declares an outputSchema
+    evidence: 3 of 3 tools return an untyped payload
+11 finding(s) at or above high; failing the run

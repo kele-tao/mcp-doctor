@@ -1,0 +1,41 @@
+name: Feature request
+description: Propose a check, a rule, or a command
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        mcp-doctor has a hard rule: no new runtime dependencies. A proposal that
+        needs one has to explain why the standard library cannot do it.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve
+      description: Describe the server bug or workflow this would catch, concretely.
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of change is this
+      options:
+        - New conformance check
+        - New security rule
+        - New CLI command or flag
+        - Output format change
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: detection
+    attributes:
+      label: How would it be detected
+      description: What signal on the wire or in the manifest tells you the server is wrong, and what is the fix text?
+    validations:
+      required: false
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false

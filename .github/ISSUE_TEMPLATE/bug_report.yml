@@ -1,0 +1,61 @@
+name: Bug report
+description: Something in mcp-doctor behaved differently than documented
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. The fastest path to a fix is a minimal server that
+        reproduces the problem.
+  - type: input
+    id: version
+    attributes:
+      label: mcp-doctor version
+      description: Output of "mcp-doctor --version" or the commit you are on.
+    validations:
+      required: true
+  - type: dropdown
+    id: command
+    attributes:
+      label: Which command
+      options:
+        - inspect
+        - conformance
+        - audit
+        - test-tool
+        - discover
+        - report
+        - init
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: command-line
+    attributes:
+      label: Exact command
+      description: The whole command line, including flags and the server target.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: Paste the output. --verbose usually adds the useful evidence.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: server
+    attributes:
+      label: Minimal server that reproduces it
+      description: A short script, or the JSON-RPC frames if the server is proprietary.
+      render: python
+    validations:
+      required: false

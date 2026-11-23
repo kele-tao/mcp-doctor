@@ -1,0 +1,59 @@
+{
+  "machine": "AMD64",
+  "measurements": {
+    "audit_2000_tools": {
+      "max_ms": 99.89,
+      "median_ms": 89.26,
+      "min_ms": 86.09,
+      "tools": 2000
+    },
+    "audit_buggy_server": {
+      "findings": 16,
+      "max_ms": 2003.35,
+      "median_ms": 1340.26,
+      "min_ms": 987.75
+    },
+    "conformance_run_end_to_end": {
+      "checks": 25,
+      "max_ms": 1309.04,
+      "median_ms": 1057.88,
+      "min_ms": 538.67
+    },
+    "inspect_html_end_to_end": {
+      "max_ms": 1716.4,
+      "median_ms": 1221.56,
+      "min_ms": 1061.99
+    },
+    "render_html_report_demo": {
+      "max_ms": 0.24,
+      "median_ms": 0.18,
+      "min_ms": 0.17
+    },
+    "render_markdown_2000_tools": {
+      "max_ms": 185.68,
+      "median_ms": 136.1,
+      "min_ms": 114.97,
+      "tools": 2000
+    },
+    "render_terminal_scorecard_demo": {
+      "max_ms": 0.23,
+      "median_ms": 0.17,
+      "min_ms": 0.15
+    },
+    "validate_5mb_payload": {
+      "input_bytes": 5285400,
+      "max_ms": 882.79,
+      "median_ms": 775.79,
+      "min_ms": 741.48,
+      "rows": 26750
+    },
+    "validate_large_schema_document": {
+      "max_ms": 0.05,
+      "median_ms": 0.02,
+      "min_ms": 0.02,
+      "properties": 13
+    }
+  },
+  "platform": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.10"
+}

@@ -1,0 +1,22 @@
+buggy-server 0.1.0  |  protocol 2025-06-18
+conformance    #########################...  89/100   grade B
+20 pass  1 warn  1 fail  3 skip
+
+AREA    RESULT        
+------  --------------
+INIT    4 pass        
+PROTO   8 pass        
+TOOLS   4 pass  1 skip
+RES     1 pass        
+PROMPT  -  1 skip     
+CAP     1 pass  1 fail
+META    1 pass  1 warn
+CALL    -  1 skip     
+PERF    1 pass        
+
+not passing
+  SKIP  TOOLS-05  outputSchema validity  (no tool declares an outputSchema)
+  SKIP  PROMPT-01 prompts/list result shape  (not advertised)
+  FAIL  CAP-02    served capabilities are advertised  (serves resources, tools without declaring the capability)
+  SKIP  CALL-01   safe tool call round-trip  (no read-only tool with zero required arguments to probe with)
+  WARN  META-02   server instructions are present  (no instructions)

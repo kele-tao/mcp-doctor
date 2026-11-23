@@ -1,0 +1,32 @@
+name: ci
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -e ".[dev]"
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: pytest -q
+      - run: python -m mcp_doctor --help
+      - name: Conformance smoke test against the bundled demo server
+        run: |
+          python -m mcp_doctor conformance --stdio "python examples/demo_server/server.py" --fail-under 90
+      - name: Audit must fail the deliberately broken server
+        run: |
+          if python -m mcp_doctor audit --stdio "python examples/buggy_server/server.py" --fail-on high; then
+            echo "audit passed on a server that is designed to fail"
+            exit 1
+          else
+            echo "audit correctly failed the buggy server"
+          fi
