@@ -1,5 +1,7 @@
 # mcp-doctor
 
+**English** | [简体中文](README.zh-CN.md)
+
 **Point it at any Model Context Protocol server and get a conformance scorecard, a security audit and a validated tool call in one command.**
 
 [![ci](https://github.com/kele-tao/mcp-doctor/actions/workflows/ci.yml/badge.svg)](https://github.com/kele-tao/mcp-doctor/actions/workflows/ci.yml)
