@@ -5,7 +5,7 @@
 [![ci](https://github.com/kele-tao/mcp-doctor/actions/workflows/ci.yml/badge.svg)](https://github.com/kele-tao/mcp-doctor/actions/workflows/ci.yml)
 ![python](https://img.shields.io/badge/python-3.10%2B-3776ab)
 ![license](https://img.shields.io/badge/license-MIT-green)
-![tests](https://img.shields.io/badge/tests-123%20passing-brightgreen)
+![tests](https://img.shields.io/badge/tests-176%20passing-brightgreen)
 ![deps](https://img.shields.io/badge/runtime%20deps-0-blue)
 
 ![mcp-doctor inspect on the bundled demo server](docs/screenshot.png)
@@ -75,8 +75,8 @@ Then:
 mcp-doctor --help          # or: python -m mcp_doctor --help
 ```
 
-Requires Python 3.10+. Runtime dependencies: **none**. `pytest` and `ruff` live in the
-`dev` extra (`pip install -e ".[dev]"`).
+Requires Python 3.10+. Runtime dependencies: **none**. `pytest`, `ruff` and `coverage`
+live in the `dev` extra (`pip install -e ".[dev]"`).
 
 ---
 
@@ -330,6 +330,11 @@ AMD64, medians over repeated runs:
 | HTML report render | demo server, self-contained | 0.18 ms |
 | Conformance suite end to end | spawn + handshake + 25 checks | 1.06 s |
 | `inspect --html` end to end | spawn + inspect + conformance + audit + HTML | 1.22 s |
+
+Test coverage is measured, not asserted: `python benchmarks/coverage.py` runs the suite
+under coverage.py and writes [docs/COVERAGE.md](docs/COVERAGE.md). The current total is
+**87.6%** of statements in `src/`, with the security rules at 97% and the transport at 80%.
+`tests/test_docs.py` fails if the README and that file disagree.
 
 The 5 MB validation run is 6.5 MB/s of schema-checked JSON, which is the number the
 performance contract is written against. The end-to-end numbers are dominated by
